@@ -43,3 +43,4 @@ extrn jsrNewVM
 extrn jsrInitRuntime
 extrn jsrFreeVM
 extrn jsrEvalString
+extrn jsrEvalBreak
