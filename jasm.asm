@@ -9,7 +9,8 @@ main:
     ; Initialize JStar VM and runtime
     mov rdi, conf
     call jsrGetConf
-    call jsrNewVM         ; conf already in rdi
+    mov rdi, rax
+    call jsrNewVM
     mov rdi, rax          ; VM pointer
     mov qword ptr vm, rdi ; store in global var
     call jsrInitRuntime   ; init runtime, pass VM pointer in rdi
@@ -17,6 +18,7 @@ main:
 .repl:
     ; printf(prompt)
     mov rdi, prompt
+    xor eax, eax
     call printf
 
     ; fgets(src, src_len, stdin)
@@ -88,7 +90,7 @@ _start:
     mov rcx, 0                  ; 4: init
     mov r8,  0                  ; 5: fini
     mov r9,  0                  ; 6: rtld_fini
-    ; don't know if this is intential or what, but passing this argument
+    ; don't know if this is intentional or what, but passing this argument
     ; on the stack also cuauses it to be 16 bytes aligned ¯\_(ツ)_/¯
     push rsp                    ; 7: stack_end (via stack for System V ABI)
     call __libc_start_main      ; libc my beloved <3
