@@ -12,7 +12,7 @@ main:
     mov rdi, rax
     call jsrNewVM
     mov rdi, rax          ; VM pointer
-    mov qword ptr vm, rdi ; store in global var
+    mov qword [vm], rdi ; store in global var
     call jsrInitRuntime   ; init runtime, pass VM pointer in rdi
 
 .repl:
@@ -24,14 +24,14 @@ main:
     ; fgets(src, src_len, stdin)
     mov rdi, src
     mov rsi, src_len
-    mov rdx, qword ptr stdin
+    mov rdx, qword [stdin]
     call fgets
 
     test rax, rax
     jz .done ; EOF
 
     ; eval_string(vm, path, src)
-    mov rdi, qword ptr vm
+    mov rdi, qword [vm]
     mov rsi, path
     mov rdx, src
 
@@ -39,7 +39,7 @@ main:
     jmp .repl
 
 .done:
-    mov rdi, qword ptr vm
+    mov rdi, qword [vm]
     call jsrFreeVM
     mov rax, 0
     ret
@@ -75,7 +75,7 @@ eval_string:
 sigint_handler:
     mov rsi, NULL  ; disable signal handler so that double CTRL-C exits the program
     call signal
-    mov rdi, qword ptr vm
+    mov rdi, qword [vm]
     call jsrEvalBreak
     ret
 
