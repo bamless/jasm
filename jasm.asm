@@ -11,9 +11,9 @@ main:
     call jsrGetConf
     mov rdi, rax
     call jsrNewVM
-    mov rdi, rax          ; VM pointer
-    mov qword [vm], rdi ; store in global var
-    call jsrInitRuntime   ; init runtime, pass VM pointer in rdi
+    mov rdi, rax         ; VM pointer
+    mov qword [vm], rdi  ; store in global var
+    call jsrInitRuntime  ; init runtime, pass VM pointer in rdi
 
 .repl:
     ; printf(prompt)
@@ -94,9 +94,7 @@ _start:
     ; on the stack also cuauses it to be 16 bytes aligned ¯\_(ツ)_/¯
     push rsp                    ; 7: stack_end (via stack for System V ABI)
     call __libc_start_main      ; libc my beloved <3
-
-    ; Should never happen
-    call abort
+    ; We never return from this
 ; ------------------------------
 
 section '.bss' writeable
