@@ -1,7 +1,7 @@
 format ELF64
 
-include "./libc.inc.asm"
-include "./jstar.inc.asm"
+include "./libc.asm"
+include "./jstar.asm"
 
 section '.text' executable
 public main  ; so that we can `break` in gdb
